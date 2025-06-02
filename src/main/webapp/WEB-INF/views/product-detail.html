@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${product.productName}"></title>
+    <th:block th:replace="~{fragments/common-styles :: styles}"></th:block>
+</head>
+<body>
+<div th:replace="~{fragments/navigation :: navbar}"></div>
+
+<div class="container" th:if="${product != null}">
+    <h1>Chi Tiết Sản Phẩm</h1>
+
+    <div th:if="${addSuccessMessage}" class="message success-message" th:text="${addSuccessMessage}"></div>
+    <div th:if="${addErrorMessage}" class="message error-message" th:text="${addErrorMessage}"></div>
+    <div th:if="${param.addSuccessMessage}" class="message success-message" th:text="${param.addSuccessMessage[0]}"></div>
+    <div th:if="${param.addErrorMessage}" class="message error-message" th:text="${param.addErrorMessage[0]}"></div>
+
+
+    <img th:src="${product.image ?: '/placeholder.png'}" th:alt="${product.productName}" class="product-detail-img"/>
+    <h2 th:text="${product.productName}">Tên sản phẩm</h2>
+    <p><strong>Mô tả:</strong> <span th:text="${product.description}">Mô tả sản phẩm</span></p>
+    <p><strong>Giá:</strong> <span th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'">Giá</span></p>
+    <p><strong>Tồn kho:</strong> <span th:text="${product.stock > 0 ? product.stock : 'Hết hàng'}">Số lượng tồn kho</span></p>
+
+    <form th:action="@{/cart/add}" method="post" th:if="${product.stock > 0}">
+        <input type="hidden" name="productId" th:value="${product.id}" />
+        <div class="form-group">
+            <label for="quantity">Số lượng:</label>
+            <input type="number" id="quantity" name="quantity" value="1" min="1" th:max="${product.stock}" />
+        </div>
+        <button type="submit">Thêm vào giỏ hàng</button>
+    </form>
+    <p th:if="${product.stock <= 0}" class="error-message">Sản phẩm này hiện đã hết hàng.</p>
+    <a th:href="@{/home}" class="button button-secondary" style="margin-top:15px;">Quay lại danh sách</a>
+</div>
+<div class="container" th:if="${product == null}">
+    <p class="error-message">Không tìm thấy sản phẩm.</p>
+    <a th:href="@{/home}" class="button button-secondary">Quay lại trang chủ</a>
+</div>
+
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>
