@@ -10,13 +10,10 @@
 
 <div class="container">
     <h1>Chào mừng đến Trang Quản Trị</h1>
-    <p>Đây là nơi bạn có thể quản lý người dùng, sản phẩm, đơn hàng, v.v...</p>
-    <p><em>(Nội dung chi tiết sẽ được phát triển sau)</em></p>
-
     <ul>
-        <li><a href="#">Quản lý Sản phẩm</a></li>
-        <li><a href="#">Quản lý Người dùng</a></li>
-        <li><a href="#">Quản lý Đơn hàng</a></li>
+        <li><a th:href="@{/admin/products}">Quản lý Sản phẩm</a></li>
+        <li><a th:href="@{/admin/users}">Quản lý Người dùng</a></li>
+        <li><a th:href="@{/admin/orders}">Quản lý Đơn hàng</a></li>
     </ul>
 </div>
 

@@ -7,6 +7,8 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class CustomerRepositoryImpl implements CustomerRepository {
 
@@ -64,5 +66,21 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     @Override
     public Customer findById(int id) {
         return sessionFactory.getCurrentSession().get(Customer.class, id);
+    }
+
+    @Override
+    public List<Customer> findAllPaginated(int page, int size) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("FROM Customer", Customer.class)
+                .setFirstResult((page - 1) * size)
+                .setMaxResults(size)
+                .list();
+    }
+
+    @Override
+    public long countAll() {
+        return sessionFactory.getCurrentSession()
+                .createQuery("SELECT COUNT(c.id) FROM Customer c", Long.class)
+                .uniqueResult();
     }
 }

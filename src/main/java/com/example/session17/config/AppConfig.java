@@ -98,7 +98,6 @@ public class AppConfig implements WebMvcConfigurer {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        // !!! TUYỆT ĐỐI KHÔNG HARDCODE TRONG PRODUCTION !!!
         dataSource.setUrl("jdbc:mysql://localhost:3306/ss17_java_web");
         dataSource.setUsername("root");
         dataSource.setPassword("01062002");
@@ -108,7 +107,6 @@ public class AppConfig implements WebMvcConfigurer {
     @Bean
     public Cloudinary cloudinary() {
         Map<String, String> config = new HashMap<>();
-        // !!! TUYỆT ĐỐI KHÔNG HARDCODE TRONG PRODUCTION !!!
         config.put("cloud_name", "dlz6sulzj");
         config.put("api_key", "785158124563839");
         config.put("api_secret", "ndEbN-AL0Xf8TupeenWvDVRsU3c");

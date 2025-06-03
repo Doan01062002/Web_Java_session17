@@ -11,4 +11,6 @@ public interface OrderRepository {
     List<Order> findByCustomerId(int customerId, int page, int size);
     long countByCustomerId(int customerId);
     Order findById(int orderId);
+    List<Order> findAllPaginated(int page, int size);
+    long countAll();
 }

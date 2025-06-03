@@ -95,4 +95,23 @@ public class OrderServiceImpl implements OrderService {
     public Order getOrderByIdAndCustomerId(int orderId, int customerId) {
         return orderRepository.findByIdAndCustomerId(orderId, customerId);
     }
+
+    @Override
+    public List<Order> getAllOrders(int page, int size) {
+        return orderRepository.findAllPaginated(page, size);
+    }
+
+    @Override
+    public long countAllOrders() {
+        return orderRepository.countAll();
+    }
+
+    @Override
+    public void updateOrderStatus(int orderId, String status) {
+        Order order = orderRepository.findById(orderId);
+        if (order != null) {
+            order.setStatus(status);
+            orderRepository.update(order);
+        }
+    }
 }

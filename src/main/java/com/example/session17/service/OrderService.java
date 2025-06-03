@@ -12,4 +12,7 @@ public interface OrderService {
     long countOrdersByCustomerId(int customerId); // Đổi tên cho rõ ràng
     void cancelOrder(int orderId, int customerId) throws IllegalArgumentException;
     Order getOrderByIdAndCustomerId(int orderId, int customerId);
+    List<Order> getAllOrders(int page, int size);
+    long countAllOrders();
+    void updateOrderStatus(int orderId, String status);
 }

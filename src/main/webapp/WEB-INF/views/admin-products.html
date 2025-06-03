@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Quản Lý Sản Phẩm</title>
+  <th:block th:replace="~{fragments/common-styles :: styles}"></th:block>
+</head>
+<body>
+<div th:replace="~{fragments/navigation :: navbar}"></div>
+
+<div class="container">
+  <h1>Quản Lý Sản Phẩm</h1>
+  <a th:href="@{/admin/products/add}" class="button">Thêm Sản Phẩm</a>
+
+  <div th:if="${param.saveSuccess}" class="message success-message">Lưu sản phẩm thành công!</div>
+  <div th:if="${param.deleteSuccess}" class="message success-message">Xóa sản phẩm thành công!</div>
+  <div th:if="${param.productNotFound}" class="message error-message">Sản phẩm không tìm thấy.</div>
+
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Tên</th>
+      <th>Giá</th>
+      <th>Tồn kho</th>
+      <th>Hình ảnh</th>
+      <th>Hành động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+      <td th:text="${product.id}"></td>
+      <td th:text="${product.productName}"></td>
+      <td th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
+      <td th:text="${product.stock}"></td>
+      <td><img th:src="${product.image ?: '/placeholder.png'}" style="width: 50px; height: auto;" th:alt="${product.productName}"/></td>
+      <td>
+        <a th:href="@{/admin/products/edit/{id}(id=${product.id})}" class="button">Sửa</a>
+        <a th:href="@{/admin/products/delete/{id}(id=${product.id})}" class="button button-danger" onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?');">Xóa</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination" th:if="${totalPages > 1}">
+    <a th:if="${currentPage > 1}" th:href="@{/admin/products(page=${currentPage - 1}, size=${pageSize})}">Trước</a>
+    <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+            <a th:if="${i != currentPage}" th:href="@{/admin/products(page=${i}, size=${pageSize})}" th:text="${i}"></a>
+            <span th:if="${i == currentPage}" class="current" th:text="${i}"></span>
+        </span>
+    <a th:if="${currentPage < totalPages}" th:href="@{/admin/products(page=${currentPage + 1}, size=${pageSize})}">Sau</a>
+  </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

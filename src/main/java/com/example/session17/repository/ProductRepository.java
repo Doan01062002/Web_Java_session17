@@ -9,4 +9,6 @@ public interface ProductRepository {
     long countAll();
     Product findById(int id);
     void update(Product product);
+    void save(Product product);
+    void delete(Product product);
 }

@@ -37,4 +37,14 @@ public class ProductRepositoryImpl implements ProductRepository {
     public void update(Product product) {
         sessionFactory.getCurrentSession().merge(product);
     }
+
+    @Override
+    public void save(Product product) {
+        sessionFactory.getCurrentSession().saveOrUpdate(product);
+    }
+
+    @Override
+    public void delete(Product product) {
+        sessionFactory.getCurrentSession().delete(product);
+    }
 }

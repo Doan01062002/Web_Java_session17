@@ -61,4 +61,20 @@ public class OrderRepositoryImpl implements OrderRepository {
                 .setParameter("customerId", customerId)
                 .uniqueResult();
     }
+
+    @Override
+    public List<Order> findAllPaginated(int page, int size) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("FROM Order ORDER BY id DESC", Order.class)
+                .setFirstResult((page - 1) * size)
+                .setMaxResults(size)
+                .list();
+    }
+
+    @Override
+    public long countAll() {
+        return sessionFactory.getCurrentSession()
+                .createQuery("SELECT COUNT(o.id) FROM Order o", Long.class)
+                .uniqueResult();
+    }
 }

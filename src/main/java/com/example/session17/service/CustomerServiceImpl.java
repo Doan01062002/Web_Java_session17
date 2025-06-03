@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class CustomerServiceImpl implements CustomerService {
@@ -56,5 +58,24 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer findById(int id) {
         return customerRepository.findById(id);
+    }
+
+    @Override
+    public List<Customer> getAllCustomers(int page, int size) {
+        return customerRepository.findAllPaginated(page, size);
+    }
+
+    @Override
+    public long countAllCustomers() {
+        return customerRepository.countAll();
+    }
+
+    @Override
+    public void toggleCustomerStatus(int customerId) {
+        Customer customer = customerRepository.findById(customerId);
+        if (customer != null) {
+            customer.setStatus(!customer.isStatus());
+            customerRepository.update(customer);
+        }
     }
 }
