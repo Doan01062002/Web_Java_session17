@@ -78,4 +78,14 @@ public class CustomerServiceImpl implements CustomerService {
             customerRepository.update(customer);
         }
     }
+
+    @Override
+    public long countActiveCustomers() {
+        return customerRepository.countByStatus(true);
+    }
+
+    @Override
+    public long countInactiveCustomers() {
+        return customerRepository.countByStatus(false);
+    }
 }

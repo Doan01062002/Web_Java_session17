@@ -6,7 +6,10 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class OrderRepositoryImpl implements OrderRepository {
@@ -76,5 +79,21 @@ public class OrderRepositoryImpl implements OrderRepository {
         return sessionFactory.getCurrentSession()
                 .createQuery("SELECT COUNT(o.id) FROM Order o", Long.class)
                 .uniqueResult();
+    }
+
+    @Override
+    public long countByStatus(String status) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("SELECT COUNT(o.id) FROM Order o WHERE o.status = :status", Long.class)
+                .setParameter("status", status)
+                .uniqueResult();
+    }
+
+    @Override
+    public double getTotalRevenue() {
+        Double total = sessionFactory.getCurrentSession()
+                .createQuery("SELECT SUM(o.totalMoney) FROM Order o WHERE o.status = 'DELIVERED'", Double.class)
+                .uniqueResult();
+        return total != null ? total : 0.0;
     }
 }

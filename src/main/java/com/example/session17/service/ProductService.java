@@ -9,4 +9,7 @@ public interface ProductService {
     Product getProductById(int id);
     void saveProduct(Product product);
     void deleteProduct(int id);
+    long countAllProducts();
+    long countInStockProducts();
+    long countOutOfStockProducts();
 }

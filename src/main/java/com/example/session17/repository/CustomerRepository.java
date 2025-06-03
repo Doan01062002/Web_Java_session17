@@ -14,4 +14,5 @@ public interface CustomerRepository {
     Customer findById(int id);
     List<Customer> findAllPaginated(int page, int size);
     long countAll();
+    long countByStatus(boolean status);
 }

@@ -5,6 +5,7 @@ import com.example.session17.model.Order;
 import com.example.session17.model.ProductCart;
 
 import java.util.List;
+import java.util.Map;
 
 public interface OrderService {
     Order createOrder(Order orderDetails, Customer customer, List<ProductCart> cartItems) throws IllegalArgumentException;
@@ -15,4 +16,6 @@ public interface OrderService {
     List<Order> getAllOrders(int page, int size);
     long countAllOrders();
     void updateOrderStatus(int orderId, String status);
+    Map<String, Long> countOrdersByStatus();
+    double getTotalRevenue();
 }

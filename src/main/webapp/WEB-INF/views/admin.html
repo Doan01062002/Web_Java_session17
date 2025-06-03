@@ -2,19 +2,72 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Trang Quản Trị</title>
+    <title>Trang Quản Trị - Thống Kê</title>
     <th:block th:replace="~{fragments/common-styles :: styles}"></th:block>
+    <style>
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #f4f4f4; }
+    </style>
 </head>
 <body>
 <div th:replace="~{fragments/navigation :: navbar}"></div>
 
 <div class="container">
-    <h1>Chào mừng đến Trang Quản Trị</h1>
-    <ul>
-        <li><a th:href="@{/admin/products}">Quản lý Sản phẩm</a></li>
-        <li><a th:href="@{/admin/users}">Quản lý Người dùng</a></li>
-        <li><a th:href="@{/admin/orders}">Quản lý Đơn hàng</a></li>
-    </ul>
+    <h1>Thống Kê Hệ Thống</h1>
+
+    <div style="display: flex; gap: 30px; flex-wrap: wrap;">
+        <!-- Thống kê người dùng -->
+        <div style="flex: 1; min-width: 300px;">
+            <h3>Thống Kê Người Dùng</h3>
+            <table>
+                <tr><th>Tổng số người dùng</th><td th:text="${totalCustomers}"></td></tr>
+                <tr><th>Người dùng hoạt động</th><td th:text="${activeCustomers}"></td></tr>
+                <tr><th>Người dùng bị khóa</th><td th:text="${inactiveCustomers}"></td></tr>
+            </table>
+        </div>
+
+        <!-- Thống kê sản phẩm -->
+        <div style="flex: 1; min-width: 300px;">
+            <h3>Thống Kê Sản Phẩm</h3>
+            <table>
+                <tr><th>Tổng số sản phẩm</th><td th:text="${totalProducts}"></td></tr>
+                <tr><th>Sản phẩm còn hàng</th><td th:text="${inStockProducts}"></td></tr>
+                <tr><th>Sản phẩm hết hàng</th><td th:text="${outOfStockProducts}"></td></tr>
+            </table>
+        </div>
+
+        <!-- Thống kê đơn hàng -->
+        <div style="flex: 1; min-width: 300px;">
+            <h3>Thống Kê Đơn Hàng</h3>
+            <table>
+                <tr><th>Tổng số đơn hàng</th><td th:text="${totalOrders}"></td></tr>
+                <tr><th>Đang chờ xử lý</th><td th:text="${orderStatusCounts['PENDING']}"></td></tr>
+                <tr><th>Đã xác nhận</th><td th:text="${orderStatusCounts['CONFIRMED']}"></td></tr>
+                <tr><th>Đang giao hàng</th><td th:text="${orderStatusCounts['SHIPPED']}"></td></tr>
+                <tr><th>Đã giao</th><td th:text="${orderStatusCounts['DELIVERED']}"></td></tr>
+                <tr><th>Đã hủy</th><td th:text="${orderStatusCounts['CANCELLED']}"></td></tr>
+            </table>
+        </div>
+
+        <!-- Thống kê doanh thu -->
+        <div style="flex: 1; min-width: 300px;">
+            <h3>Thống Kê Doanh Thu</h3>
+            <table>
+                <tr><th>Tổng doanh thu</th><td th:text="${#numbers.formatDecimal(totalRevenue, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Liên kết quản trị -->
+    <div style="margin-top: 30px;">
+        <h3>Quản Lý</h3>
+        <ul>
+            <li><a th:href="@{/admin/products}">Quản lý Sản phẩm</a></li>
+            <li><a th:href="@{/admin/users}">Quản lý Người dùng</a></li>
+            <li><a th:href="@{/admin/orders}">Quản lý Đơn hàng</a></li>
+        </ul>
+    </div>
 </div>
 
 <div th:replace="~{fragments/footer :: footer}"></div>

@@ -10,7 +10,7 @@
 
 <div class="container">
   <h1 th:text="${product.id != null} ? 'Sửa Sản Phẩm' : 'Thêm Sản Phẩm'"></h1>
-  <form th:action="@{/admin/products/save}" th:object="${product}" method="post" enctype="multipart/form-data">
+  <form th:action="@{/admin/products/save}" th:object="${product}" method="post">
     <input type="hidden" th:field="*{id}" />
     <div class="form-group">
       <label for="productName">Tên sản phẩm:</label>
@@ -32,9 +32,10 @@
       <span th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}" class="error"></span>
     </div>
     <div class="form-group">
-      <label for="imageFile">Hình ảnh:</label>
-      <input type="file" id="imageFile" name="imageFile" accept="image/*" />
-      <img th:if="${product.image}" th:src="${product.image}" style="width: 100px; height: auto; margin-top: 10px;" />
+      <label for="image">URL ảnh:</label>
+      <input type="text" id="image" th:field="*{image}" placeholder="Nhập URL ảnh (https://...)" />
+      <span th:if="${#fields.hasErrors('image')}" th:errors="*{image}" class="error"></span>
+      <img th:if="${product.image}" th:src="${product.image}" style="width: 100px; height: auto; margin-top: 10px;" th:alt="${product.productName}" />
     </div>
     <button type="submit" class="button">Lưu</button>
     <a th:href="@{/admin/products}" class="button button-secondary">Hủy</a>

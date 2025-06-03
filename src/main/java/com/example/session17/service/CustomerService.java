@@ -15,4 +15,6 @@ public interface CustomerService {
     List<Customer> getAllCustomers(int page, int size);
     long countAllCustomers();
     void toggleCustomerStatus(int customerId);
+    long countActiveCustomers();
+    long countInactiveCustomers();
 }

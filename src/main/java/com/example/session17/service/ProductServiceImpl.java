@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true) // Mặc định readOnly cho các phương thức get
+@Transactional
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
@@ -41,5 +41,20 @@ public class ProductServiceImpl implements ProductService {
         if (product != null) {
             productRepository.delete(product);
         }
+    }
+
+    @Override
+    public long countAllProducts() {
+        return productRepository.countAll();
+    }
+
+    @Override
+    public long countInStockProducts() {
+        return productRepository.countByStockGreaterThan(0);
+    }
+
+    @Override
+    public long countOutOfStockProducts() {
+        return productRepository.countByStock(0);
     }
 }

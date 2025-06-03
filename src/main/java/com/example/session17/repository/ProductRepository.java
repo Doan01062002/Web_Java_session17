@@ -11,4 +11,6 @@ public interface ProductRepository {
     void update(Product product);
     void save(Product product);
     void delete(Product product);
+    long countByStockGreaterThan(int stock);
+    long countByStock(int stock);
 }

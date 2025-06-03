@@ -47,4 +47,20 @@ public class ProductRepositoryImpl implements ProductRepository {
     public void delete(Product product) {
         sessionFactory.getCurrentSession().delete(product);
     }
+
+    @Override
+    public long countByStockGreaterThan(int stock) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("SELECT COUNT(p.id) FROM Product p WHERE p.stock > :stock", Long.class)
+                .setParameter("stock", stock)
+                .uniqueResult();
+    }
+
+    @Override
+    public long countByStock(int stock) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("SELECT COUNT(p.id) FROM Product p WHERE p.stock = :stock", Long.class)
+                .setParameter("stock", stock)
+                .uniqueResult();
+    }
 }

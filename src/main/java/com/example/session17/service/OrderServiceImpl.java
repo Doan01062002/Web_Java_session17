@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -113,5 +115,20 @@ public class OrderServiceImpl implements OrderService {
             order.setStatus(status);
             orderRepository.update(order);
         }
+    }
+
+    @Override
+    public Map<String, Long> countOrdersByStatus() {
+        Map<String, Long> statusCounts = new HashMap<>();
+        String[] statuses = {"PENDING", "CONFIRMED", "SHIPPED", "DELIVERED", "CANCELLED"};
+        for (String status : statuses) {
+            statusCounts.put(status, orderRepository.countByStatus(status));
+        }
+        return statusCounts;
+    }
+
+    @Override
+    public double getTotalRevenue() {
+        return orderRepository.getTotalRevenue();
     }
 }

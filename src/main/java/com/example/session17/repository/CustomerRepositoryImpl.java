@@ -83,4 +83,12 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 .createQuery("SELECT COUNT(c.id) FROM Customer c", Long.class)
                 .uniqueResult();
     }
+
+    @Override
+    public long countByStatus(boolean status) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("SELECT COUNT(c.id) FROM Customer c WHERE c.status = :status", Long.class)
+                .setParameter("status", status)
+                .uniqueResult();
+    }
 }
